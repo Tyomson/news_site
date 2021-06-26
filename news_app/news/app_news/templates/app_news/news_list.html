@@ -1,0 +1,57 @@
+{% extends 'app_news/base.html' %}
+
+{% block title %}
+    Новости
+{% endblock %}
+{% block content %}
+    <h1>Новости</h1>
+
+    {% if perms.app_news.can_write %}
+        <a href="{% url 'create_new_news'%}">Создание новой новости</a>
+    {% else %}
+        <p>Создание новости доступно только верифицированным пользователям</p>
+    {% endif %}
+
+    {% if perms.app_news.can_publish %}
+        <a href="{% url 'unpublished_news'%}">Неопубликованные новости</a>
+    {% endif %}
+    {% if perms.app_news.can_verify %}
+        <a href="{% url 'unverified_users'%}">Не верифицированные пользователи</a>
+    {% endif %}
+
+<!--Первый вариант фильтрации по тегам-->
+    <p>Доступные теги для поиска</p>
+    <ul>
+    {% for news in news_list %}
+        <li>
+            <a href="{% url 'news-tag' news.tag %}">
+                {{ news.tag }}
+                </a>
+        </li>
+    {% empty %}
+        <p>Доступных тегов для поиска нет</p>
+    {% endfor %}
+    </ul>
+
+<!--Второй вариант фильтрации по тегам-->
+    <form method="post">
+      {% csrf_token %}
+        <input type="text" name="tag" size="30">
+        <input type="date" name="date">
+        <button type="submit">Поиск</button>
+    </form>
+
+    <ul>
+    {% for news in news_list %}
+        <li>
+            <a href="{% url 'news-detail' news.id %}">
+            {{ news.title_news }}
+            </a>
+            <p>{{ news.content }}</p>
+            <p>{{ news.tag }}</p>
+        </li>
+    {% empty %}
+        <p>Новостей нет</p>
+    {% endfor %}
+    </ul>
+{% endblock %}

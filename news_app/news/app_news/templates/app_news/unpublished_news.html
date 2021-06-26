@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Неопубликованные новости</title>
+</head>
+<body>
+<ul>
+<form method="post">
+{% csrf_token %}
+  {% for news in news_list %}
+    <li>
+      <p>{{ news.title_news }}</p>
+      <p>{{ news.content }}</p>
+      <p>{{ news.tag }}</p>
+      <input type="checkbox" name="{{ news.id }}">
+    </li>
+{% empty %}
+    <p>Новостей нет</p>
+{% endfor %}
+<button type="submit">Сохранить</button>
+</form>
+</ul>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Не верифицированные пользователи</title>
+</head>
+<body>
+<ul>
+<form method="post">
+{% csrf_token %}
+  {% for user in user_list %}
+    <li>
+      <p>{{ user.username }}</p>
+      <p>{{ user.first_name }}</p>
+      <p>{{ user.last_name }}</p>
+      <p>{{ user.profile.phone_number }}</p>
+      <p>{{ user.profile.city }}</p>
+      <input type="checkbox" name="{{ user.id }}">
+    </li>
+ {% empty %}
+    <p>Не верифицированных пользователей нет</p>
+ {% endfor %}
+  <button type="submit">Сохранить</button>
+</form>
+</ul>
+</body>
+</html>

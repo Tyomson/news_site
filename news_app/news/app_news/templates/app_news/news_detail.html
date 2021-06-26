@@ -1,0 +1,30 @@
+{% extends 'app_news/base.html' %}
+{% block title %}
+    {{ object.title_news }}
+{% endblock %}
+{% block content %}
+    <h1>{{ object.title_news}}</h1>
+    <p>{{ object.content }}</p>
+    <p>Редактирование новости - <a href="{% url 'news_edit' object.id %}">ТЫК</a></p>
+
+
+    {% if object.comment.all %}
+    <ul>
+        {% for comment in object.comment.all %}
+        <li>
+            <p>{{ comment.username.username }}</p>
+            <p>{{ comment.comment_text }}</p>
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>комментариев нет</p>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{comment_form.as_p}}
+      <button type="submit">Добавить комментарий</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пользователе</title>
+</head>
+<body>
+  <h2>Информация</h2>
+  <p>Ник: {{account.username}}</p>
+  <p>Имя: {{account.first_name}}</p>
+  <p>Фамилия: {{account.last_name}}</p>
+  <p>Ваш город: {{ account.profile.city }}</p>
+  <p>Номер телефона: {{ account.profile.phone_number }}</p>
+  <p>Число опубликованных новостей: {{ account.profile.number_published_news }}</p>
+
+</body>
+</html>
